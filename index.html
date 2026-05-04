@@ -38,10 +38,7 @@
 
     body {
       margin: 0;
-      background:
-        radial-gradient(circle at 14px 18px, rgba(244, 217, 214, 0.35) 0 2px, transparent 2px),
-        linear-gradient(180deg, #fff7ef 0%, #fffaf4 52%, #f9f0e7 100%);
-      background-size: 34px 34px, auto;
+      background: linear-gradient(180deg, #fff8f1 0%, #fffaf5 54%, #f8efe7 100%);
       color: var(--text);
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       font-size: 17px;
@@ -320,13 +317,13 @@
       width: 100%;
       max-width: 100%;
       min-width: 0;
-      border: 1px solid #ecd9c7;
+      border: 1px solid #ead9ca;
       border-radius: 18px;
-      background: linear-gradient(180deg, #fffefa 0%, #fff7ef 100%);
-      text-align: left;
-      font-weight: 700;
+      background: rgba(255, 253, 249, 0.92);
+      text-align: center;
+      font-weight: 800;
       min-height: 50px;
-      box-shadow: 0 3px 10px rgba(122, 86, 61, 0.04);
+      box-shadow: none;
     }
 
     .category-btn {
@@ -336,11 +333,16 @@
       box-sizing: border-box;
     }
 
+    .category-button:hover {
+      background: #fff8f1;
+    }
+
+
     .category-button.selected {
-      border-color: var(--accent);
-      background: linear-gradient(180deg, var(--accent-soft) 0%, #f7fff8 100%);
+      border-color: rgba(143, 191, 165, 0.85);
+      background: var(--accent-soft);
       color: #355640;
-      box-shadow: inset 0 0 0 1px rgba(143, 191, 165, 0.35), 0 4px 12px rgba(143, 191, 165, 0.12);
+      box-shadow: inset 0 0 0 1px rgba(143, 191, 165, 0.25);
     }
 
     .time-row {
