@@ -11,6 +11,12 @@
       box-sizing: border-box;
     }
 
+    html,
+    body {
+      max-width: 100%;
+      overflow-x: hidden;
+    }
+
     :root {
       --bg: #fbf4e8;
       --card: #fffdf8;
@@ -45,14 +51,25 @@
     input,
     select,
     textarea {
+      box-sizing: border-box;
       width: 100%;
       max-width: 100%;
+      min-width: 0;
       border: 1px solid var(--line);
       border-radius: 14px;
       background: #fffefa;
       color: var(--text);
       padding: 12px 13px;
       outline: none;
+    }
+
+    input[type="date"],
+    input[type="time"] {
+      box-sizing: border-box;
+      display: block;
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
     }
 
     input:focus,
@@ -93,8 +110,10 @@
 
     .app {
       width: min(980px, 100%);
+      max-width: 100%;
       margin: 0 auto;
       padding: 28px 16px 42px;
+      overflow-x: hidden;
     }
 
     .header {
@@ -149,6 +168,9 @@
       display: none;
       margin: 0 0 24px;
       padding: 18px;
+      max-width: 100%;
+      min-width: 0;
+      overflow: hidden;
     }
 
     .panel.open {
@@ -166,6 +188,14 @@
     .form-grid {
       display: grid;
       gap: 16px;
+      max-width: 100%;
+      min-width: 0;
+    }
+
+    .field {
+      max-width: 100%;
+      min-width: 0;
+      overflow-wrap: anywhere;
     }
 
     .field label,
@@ -180,10 +210,14 @@
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 10px;
+      max-width: 100%;
+      min-width: 0;
     }
 
     .category-button {
       width: 100%;
+      max-width: 100%;
+      min-width: 0;
       border: 1px solid var(--line);
       border-radius: 14px;
       background: #fffefa;
@@ -202,8 +236,16 @@
     .time-row {
       display: grid;
       grid-template-columns: minmax(0, 1fr) auto;
-      gap: 10px;
-      align-items: end;
+      gap: 8px;
+      align-items: center;
+      max-width: 100%;
+      min-width: 0;
+    }
+
+    .time-row input,
+    .time-row button {
+      max-width: 100%;
+      min-width: 0;
     }
 
     .quick-button {
@@ -211,6 +253,7 @@
       background: #eaf0e8;
       color: #3c6049;
       font-weight: 700;
+      min-width: 0;
     }
 
     .quick-button:hover {
@@ -222,6 +265,9 @@
       border-radius: 15px;
       background: rgba(255, 253, 248, 0.72);
       padding: 0;
+      max-width: 100%;
+      min-width: 0;
+      overflow: hidden;
     }
 
     .later-times summary {
@@ -241,6 +287,8 @@
       display: grid;
       gap: 14px;
       padding: 0 13px 13px;
+      max-width: 100%;
+      min-width: 0;
     }
 
     .symptom-chip-area {
@@ -489,6 +537,8 @@
       flex-wrap: wrap;
       gap: 8px;
       align-items: center;
+      max-width: 100%;
+      min-width: 0;
     }
 
     .small-button {
@@ -504,6 +554,8 @@
       font-size: 0.9rem;
       padding: 9px;
       background: #fffefa;
+      max-width: 100%;
+      min-width: 0;
     }
 
     .backup-message {
@@ -544,13 +596,28 @@
         border-radius: 16px;
         padding: 15px;
       }
+    }
 
+    @media (max-width: 520px) {
       .time-row {
         grid-template-columns: 1fr;
       }
 
       .quick-button {
         width: 100%;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .app {
+        padding-left: 10px;
+        padding-right: 10px;
+      }
+
+      .panel,
+      .record-card {
+        padding-left: 12px;
+        padding-right: 12px;
       }
 
       .record-top {
@@ -562,9 +629,7 @@
       .followup-actions button {
         flex: 1 1 120px;
       }
-    }
 
-    @media (max-width: 480px) {
       .detail-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
