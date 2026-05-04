@@ -110,7 +110,7 @@
     }
 
     textarea {
-      min-height: 108px;
+      min-height: 96px;
       resize: vertical;
     }
 
@@ -203,7 +203,7 @@
 
     .panel {
       display: none;
-      margin: 0 0 24px;
+      margin: 0 0 18px;
       padding: 18px;
       max-width: 100%;
       min-width: 0;
@@ -276,7 +276,7 @@
 
     .form-grid {
       display: grid;
-      gap: 16px;
+      gap: 14px;
       max-width: 100%;
       min-width: 0;
     }
@@ -408,7 +408,7 @@
 
     .symptom-chip-area {
       display: grid;
-      gap: 8px;
+      gap: 7px;
       width: 100%;
       max-width: 100%;
       min-width: 0;
@@ -423,7 +423,7 @@
 
     .symptom-chips {
       display: grid;
-      gap: 10px;
+      gap: 8px;
       max-width: 100%;
       min-width: 0;
     }
@@ -464,7 +464,7 @@
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
-      margin-top: 2px;
+      margin-top: -4px;
     }
 
     .save-button {
@@ -483,14 +483,14 @@
     }
 
     .message {
-      min-height: 1.7em;
-      margin: 2px 0 0;
+      min-height: 0;
+      margin: 0;
       color: var(--warn);
       font-weight: 700;
     }
 
     .records-section {
-      margin-top: 26px;
+      margin-top: 20px;
     }
 
     .empty {
@@ -845,7 +845,7 @@
 
           <div class="field">
             <label for="medicineMemoInput">薬名・量などの記入（任意）</label>
-            <input type="text" id="medicineMemoInput" placeholder="例：夜の薬、不安時の薬、量など">
+            <input type="text" id="medicineMemoInput">
           </div>
 
           <div class="field">
@@ -888,7 +888,7 @@
             <div class="symptom-chip-area" aria-label="よくある症状">
               <div class="symptom-chips" id="symptomChips"></div>
             </div>
-            <textarea id="symptomInput" placeholder="例：眠気、頭が重い、ぼーっとする、不安が少し下がった、眠れた など"></textarea>
+            <textarea id="symptomInput"></textarea>
           </div>
 
           <p class="message" id="formMessage" role="alert"></p>
