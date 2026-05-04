@@ -1,0 +1,25 @@
+{
+  "name": "服薬メモ",
+  "short_name": "服薬メモ",
+  "description": "効果を見たい薬だけ、飲んだ時間と効き方をメモできます。",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f7efe3",
+  "theme_color": "#7fa38a",
+  "lang": "ja",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20192%20192%22%3E%3Crect%20width%3D%22192%22%20height%3D%22192%22%20rx%3D%2242%22%20fill%3D%22%23f7efe3%22%2F%3E%3Crect%20x%3D%2248%22%20y%3D%2234%22%20width%3D%2296%22%20height%3D%22124%22%20rx%3D%2218%22%20fill%3D%22%23fffdf8%22%20stroke%3D%22%237fa38a%22%20stroke-width%3D%228%22%2F%3E%3Cpath%20d%3D%22M70%2072h52M70%2096h52M70%20120h32%22%20stroke%3D%22%23766c60%22%20stroke-width%3D%2210%22%20stroke-linecap%3D%22round%22%2F%3E%3Crect%20x%3D%2280%22%20y%3D%22128%22%20width%3D%2258%22%20height%3D%2224%22%20rx%3D%2212%22%20fill%3D%22%237fa38a%22%20transform%3D%22rotate(-18%20109%20140)%22%2F%3E%3Ccircle%20cx%3D%2292%22%20cy%3D%22139%22%20r%3D%225%22%20fill%3D%22%23fffdf8%22%2F%3E%3C%2Fsvg%3E",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20512%20512%22%3E%3Crect%20width%3D%22512%22%20height%3D%22512%22%20rx%3D%22112%22%20fill%3D%22%23f7efe3%22%2F%3E%3Crect%20x%3D%22128%22%20y%3D%2290%22%20width%3D%22256%22%20height%3D%22330%22%20rx%3D%2248%22%20fill%3D%22%23fffdf8%22%20stroke%3D%22%237fa38a%22%20stroke-width%3D%2222%22%2F%3E%3Cpath%20d%3D%22M188%20192h136M188%20256h136M188%20320h84%22%20stroke%3D%22%23766c60%22%20stroke-width%3D%2228%22%20stroke-linecap%3D%22round%22%2F%3E%3Crect%20x%3D%22208%22%20y%3D%22342%22%20width%3D%22156%22%20height%3D%2264%22%20rx%3D%2232%22%20fill%3D%22%237fa38a%22%20transform%3D%22rotate(-18%20286%20374)%22%2F%3E%3Ccircle%20cx%3D%22242%22%20cy%3D%22372%22%20r%3D%2214%22%20fill%3D%22%23fffdf8%22%2F%3E%3C%2Fsvg%3E",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
