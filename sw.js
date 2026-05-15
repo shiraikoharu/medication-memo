@@ -1,4 +1,4 @@
-const CACHE_NAME = "medication-memo-cache-v14";
+﻿const CACHE_NAME = "medication-memo-cache-v17";
 const APP_SHELL = [
   "./index.html",
   "./manifest.json",

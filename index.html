@@ -115,7 +115,7 @@
     }
 
     #symptomInput {
-      margin-top: 10px;
+      margin-top: 0;
     }
 
     button {
@@ -410,6 +410,10 @@
       min-width: 0;
     }
 
+    .later-times-body .symptom-chip-area {
+      grid-column: 1 / -1;
+    }
+
     .symptom-chip-area {
       display: grid;
       gap: 7px;
@@ -509,6 +513,52 @@
     .record-list {
       display: grid;
       gap: 14px;
+    }
+
+    .past-filter-area {
+      margin: 0 0 16px;
+      padding: 12px;
+      border: 1px solid rgba(237, 222, 210, 0.8);
+      border-radius: 18px;
+      background: rgba(255, 253, 249, 0.68);
+      max-width: 100%;
+      min-width: 0;
+      box-sizing: border-box;
+    }
+
+    .past-filter-label {
+      margin: 0 0 10px;
+      color: var(--muted);
+      font-size: 0.92rem;
+      font-weight: 700;
+    }
+
+    .past-filter-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      max-width: 100%;
+      min-width: 0;
+    }
+
+    .past-filter-button {
+      min-height: 38px;
+      padding: 8px 12px;
+      border: 1px solid #ead9ca;
+      border-radius: 999px;
+      background: rgba(255, 253, 249, 0.96);
+      color: var(--text);
+      font-size: 0.92rem;
+      font-weight: 700;
+      white-space: nowrap;
+      max-width: 100%;
+    }
+
+    .past-filter-button.selected {
+      border-color: rgba(143, 191, 165, 0.85);
+      background: var(--accent-soft);
+      color: #355640;
+      box-shadow: inset 0 0 0 1px rgba(143, 191, 165, 0.25);
     }
 
     .date-group {
@@ -657,6 +707,29 @@
 
     .followup-button:hover {
       background: #e1ecd9;
+    }
+
+    .record-symptom-details {
+      margin: 0 0 11px;
+      border: 1px solid rgba(234, 223, 206, 0.9);
+      border-radius: 14px;
+      background: rgba(255, 253, 249, 0.72);
+      box-shadow: none;
+      overflow: hidden;
+    }
+
+    .record-symptom-details summary {
+      cursor: pointer;
+      min-height: 42px;
+      padding: 9px 12px;
+      color: var(--muted);
+      font-size: 0.92rem;
+      font-weight: 700;
+      list-style-position: inside;
+    }
+
+    .record-symptom-area {
+      padding: 0 12px 12px;
     }
 
     .edit-button {
@@ -858,12 +931,16 @@
               <div class="input-wrap">
                 <input class="time-input" type="time" id="takenTimeInput">
               </div>
-              <button class="quick-button" type="button" data-now-target="takenTimeInput">今飲んだ</button>
             </div>
           </div>
 
+          <div class="field">
+            <label for="symptomInput">メモ</label>
+            <textarea id="symptomInput"></textarea>
+          </div>
+
           <details class="later-times" id="laterTimesDetails">
-            <summary>あとで入力する時間</summary>
+            <summary>あとで入力する項目</summary>
             <div class="later-times-body">
               <div class="field">
                 <label for="workedTimeInput">効いてきた時間</label>
@@ -884,16 +961,12 @@
                   <button class="quick-button" type="button" data-now-target="woreOffTimeInput">切れてきた</button>
                 </div>
               </div>
+
+              <div class="symptom-chip-area" aria-label="よくある症状">
+                <div class="symptom-chips" id="symptomChips"></div>
+              </div>
             </div>
           </details>
-
-          <div class="field">
-            <label for="symptomInput">その他の体の症状・メモ</label>
-            <div class="symptom-chip-area" aria-label="よくある症状">
-              <div class="symptom-chips" id="symptomChips"></div>
-            </div>
-            <textarea id="symptomInput"></textarea>
-          </div>
 
           <p class="message" id="formMessage" role="alert"></p>
 
@@ -912,6 +985,10 @@
 
     <section class="records-section" aria-labelledby="pastTitle">
       <h2 class="section-title" id="pastTitle">過去の記録</h2>
+      <div class="past-filter-area" aria-label="過去の記録を薬の種類で絞り込む">
+        <p class="past-filter-label">薬の種類で見る</p>
+        <div class="past-filter-buttons" id="pastFilterButtons"></div>
+      </div>
       <div id="pastRecords"></div>
     </section>
 
@@ -930,6 +1007,7 @@
 
   <script>
     const STORAGE_KEY = "fukuyakuMemoRecords";
+    const PAST_FILTER_ALL = "すべて";
     const CATEGORIES = ["抗不安薬", "睡眠薬", "抗うつ薬", "抗精神病薬", "気分安定薬", "頓服", "その他"];
     const COMMON_SYMPTOM_GROUPS = [
       ["眠気", "ぼーっとする", "眠れた", "中途覚醒あり"],
@@ -956,12 +1034,14 @@
     const formMessage = document.getElementById("formMessage");
     const cancelButton = document.getElementById("cancelButton");
     const todayRecords = document.getElementById("todayRecords");
+    const pastFilterButtons = document.getElementById("pastFilterButtons");
     const pastRecords = document.getElementById("pastRecords");
     const exportButton = document.getElementById("exportButton");
     const importInput = document.getElementById("importInput");
     const backupMessage = document.getElementById("backupMessage");
 
     let records = loadRecords();
+    let selectedPastCategory = PAST_FILTER_ALL;
 
     function todayString() {
       const now = new Date();
@@ -1118,10 +1198,28 @@
       }).join("");
     }
 
+    function renderPastFilterButtons() {
+      const filterOptions = [PAST_FILTER_ALL, ...CATEGORIES];
+      pastFilterButtons.innerHTML = filterOptions.map((category) => {
+        const selectedClass = category === selectedPastCategory ? " selected" : "";
+        const pressed = category === selectedPastCategory ? "true" : "false";
+        return `<button class="past-filter-button${selectedClass}" type="button" data-past-category="${escapeHtml(category)}" aria-pressed="${pressed}">${escapeHtml(category)}</button>`;
+      }).join("");
+    }
+
     function renderSymptomChips() {
       symptomChips.innerHTML = COMMON_SYMPTOM_GROUPS.map((group) => {
         const buttons = group.map((symptom) => {
           return `<button class="symptom-chip" type="button" data-symptom="${escapeHtml(symptom)}">${escapeHtml(symptom)}</button>`;
+        }).join("");
+        return `<div class="symptom-chip-row symptom-buttons">${buttons}</div>`;
+      }).join("");
+    }
+
+    function renderRecordSymptomChips(recordId) {
+      return COMMON_SYMPTOM_GROUPS.map((group) => {
+        const buttons = group.map((symptom) => {
+          return `<button class="symptom-chip record-symptom-chip" type="button" data-action="add-symptom" data-id="${escapeHtml(recordId)}" data-symptom="${escapeHtml(symptom)}">${escapeHtml(symptom)}</button>`;
         }).join("");
         return `<div class="symptom-chip-row symptom-buttons">${buttons}</div>`;
       }).join("");
@@ -1244,6 +1342,14 @@
       const followupHtml = followupButtons.length
         ? `<div class="followup-actions">${followupButtons.join("")}</div>`
         : "";
+      const recordSymptomHtml = `
+        <details class="record-symptom-details">
+          <summary>服用後の症状を選ぶ</summary>
+          <div class="symptom-chip-area record-symptom-area" aria-label="服用後の症状">
+            <div class="symptom-chips">${renderRecordSymptomChips(record.id)}</div>
+          </div>
+        </details>
+      `;
 
       return `
         <article class="record-card card">
@@ -1268,8 +1374,9 @@
               <span class="detail-value">${escapeHtml(displayTime(record.woreOffTime))}</span>
             </div>
           </div>
-          ${symptomHtml}
           ${followupHtml}
+          ${recordSymptomHtml}
+          ${symptomHtml}
           <div class="card-actions">
             <button class="edit-button" type="button" data-action="edit" data-id="${escapeHtml(record.id)}">編集</button>
             <button class="delete-button" type="button" data-action="delete" data-id="${escapeHtml(record.id)}">削除</button>
@@ -1281,18 +1388,28 @@
     function renderRecords() {
       const today = todayString();
       const todayList = sortedRecords(records.filter((record) => record.date === today));
-      const pastList = sortedRecords(records.filter((record) => record.date !== today));
+      const allPastList = sortedRecords(records.filter((record) => record.date !== today));
+      const filteredPastList = selectedPastCategory === PAST_FILTER_ALL
+        ? allPastList
+        : allPastList.filter((record) => record.category === selectedPastCategory);
 
       todayRecords.innerHTML = todayList.length
         ? todayList.map(renderRecordCard).join("")
         : `<p class="empty">今日の記録はまだありません。</p>`;
 
-      if (!pastList.length) {
+      renderPastFilterButtons();
+
+      if (!allPastList.length) {
         pastRecords.innerHTML = `<p class="empty">過去の記録はまだありません。</p>`;
         return;
       }
 
-      pastRecords.innerHTML = `<div class="record-list">${pastList.map(renderRecordCard).join("")}</div>`;
+      if (!filteredPastList.length) {
+        pastRecords.innerHTML = `<p class="empty">この薬の過去の記録はまだありません。</p>`;
+        return;
+      }
+
+      pastRecords.innerHTML = `<div class="record-list">${filteredPastList.map(renderRecordCard).join("")}</div>`;
     }
 
     function handleSubmit(event) {
@@ -1361,6 +1478,16 @@
       if (action === "mark-wore-off") {
         records = records.map((item) => item.id === id
           ? { ...item, woreOffTime: currentTimeString(), updatedAt: new Date().toISOString() }
+          : item
+        );
+        saveRecords();
+        renderRecords();
+      }
+
+      if (action === "add-symptom") {
+        const symptom = button.dataset.symptom || "";
+        records = records.map((item) => item.id === id
+          ? { ...item, symptom: mergeSymptomText(item.symptom || "", symptom), updatedAt: new Date().toISOString() }
           : item
         );
         saveRecords();
@@ -1446,6 +1573,15 @@
       }
     });
 
+    pastFilterButtons.addEventListener("click", (event) => {
+      const button = event.target.closest("button[data-past-category]");
+      if (!button) {
+        return;
+      }
+      selectedPastCategory = button.dataset.pastCategory;
+      renderRecords();
+    });
+
     document.addEventListener("click", (event) => {
       const nowButton = event.target.closest("button[data-now-target]");
       if (!nowButton) {
@@ -1457,6 +1593,15 @@
       }
     });
 
+    function fillTakenTimeIfEmpty() {
+      if (!takenTimeInput.value) {
+        takenTimeInput.value = currentTimeString();
+      }
+    }
+
+    takenTimeInput.addEventListener("focus", fillTakenTimeIfEmpty);
+    takenTimeInput.addEventListener("click", fillTakenTimeIfEmpty);
+
     openFormButton.addEventListener("click", () => openForm("new"));
     cancelButton.addEventListener("click", closeForm);
     recordForm.addEventListener("submit", handleSubmit);
@@ -1466,6 +1611,7 @@
     importInput.addEventListener("change", () => importJson(importInput.files[0]));
 
     renderCategoryButtons("");
+    renderPastFilterButtons();
     renderSymptomChips();
     resetForm();
     renderRecords();
