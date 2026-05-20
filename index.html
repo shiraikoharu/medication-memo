@@ -1511,11 +1511,7 @@
       closeForm();
     }
 
-    function saveRecordTimeFromInput(input) {
-      const id = input.dataset.id;
-      const field = input.dataset.field;
-      const value = input.value;
-
+    function saveRecordTimeValue(id, field, value) {
       if (!id || !value || !["workedTime", "woreOffTime"].includes(field)) {
         return;
       }
@@ -1530,9 +1526,27 @@
 
     function handleRecordTimeChange(event) {
       const input = event.target.closest('input[data-record-time-input="true"]');
-      if (input) {
-        saveRecordTimeFromInput(input);
+      if (!input || !input.value) {
+        return;
       }
+      input.dataset.pendingValue = input.value;
+    }
+
+    function handleRecordTimePickerClose(event) {
+      const input = event.target.closest('input[data-record-time-input="true"]');
+      if (!input || input.dataset.pickerActive !== "true") {
+        return;
+      }
+
+      const selectedTime = input.dataset.pendingValue || "";
+      input.dataset.pickerActive = "false";
+      input.dataset.pendingValue = "";
+
+      if (!selectedTime) {
+        return;
+      }
+
+      saveRecordTimeValue(input.dataset.id, input.dataset.field, selectedTime);
     }
 
     function handleRecordAction(event) {
@@ -1559,6 +1573,8 @@
           return;
         }
         input.value = currentTimeString();
+        input.dataset.pendingValue = "";
+        input.dataset.pickerActive = "true";
         input.focus();
         if (typeof input.showPicker === "function") {
           try {
@@ -1687,6 +1703,8 @@
     pastRecords.addEventListener("click", handleRecordAction);
     todayRecords.addEventListener("change", handleRecordTimeChange);
     pastRecords.addEventListener("change", handleRecordTimeChange);
+    todayRecords.addEventListener("focusout", handleRecordTimePickerClose);
+    pastRecords.addEventListener("focusout", handleRecordTimePickerClose);
     exportButton.addEventListener("click", exportJson);
     importInput.addEventListener("change", () => importJson(importInput.files[0]));
 
