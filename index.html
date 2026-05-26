@@ -651,39 +651,50 @@
       width: 100%;
       max-width: 100%;
       min-width: 0;
-      margin: 16px 0 18px;
-      padding: 14px 16px;
-      border: 1px solid rgba(237, 222, 210, 0.78);
-      border-radius: 18px;
-      background: rgba(255, 253, 249, 0.82);
-      box-shadow: 0 8px 20px rgba(90, 72, 56, 0.045);
+      margin: 18px 0 22px;
+      padding: 17px 18px 16px;
+      border: 1px solid rgba(237, 222, 210, 0.82);
+      border-radius: 20px;
+      background: rgba(255, 253, 249, 0.9);
+      box-shadow: 0 8px 20px rgba(90, 72, 56, 0.05);
       overflow: hidden;
+    }
+
+    .backup-title {
+      margin: 0;
+      color: var(--text);
+      font-size: 1rem;
+      font-weight: 800;
+      line-height: 1.4;
     }
 
     .backup-description {
       margin: 0;
       color: var(--muted);
-      font-size: 0.9rem;
-      line-height: 1.65;
+      font-size: 0.92rem;
+      line-height: 1.7;
     }
 
     .backup-actions {
       display: flex;
       flex-wrap: wrap;
-      gap: 8px;
+      gap: 10px;
       align-items: center;
       max-width: 100%;
       min-width: 0;
+      margin-top: 4px;
     }
 
     .small-button {
-      min-height: 38px;
-      padding: 8px 14px;
+      min-width: 88px;
+      min-height: 40px;
+      padding: 9px 18px;
       border-radius: 999px;
-      font-size: 0.9rem;
-      background: #f3eadc;
-      color: var(--muted);
-      font-weight: 700;
+      font-size: 0.92rem;
+      background: var(--accent-soft);
+      color: #355640;
+      font-weight: 800;
+      box-shadow: inset 0 0 0 1px rgba(143, 191, 165, 0.18);
     }
 
     .file-input {
@@ -949,7 +960,8 @@
       </form>
     </section>
 
-    <section class="backup-card" aria-label="記録の保存と復元">
+    <section class="backup-card" aria-label="バックアップ">
+      <h2 class="backup-title">バックアップ</h2>
       <p class="backup-description">記録を保存したり復元できます。<br>大切な記録がなくならないように、定期的に保存をお願いします。</p>
       <div class="backup-actions">
         <button class="small-button" id="exportButton" type="button">保存</button>
