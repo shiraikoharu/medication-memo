@@ -202,79 +202,63 @@
     }
 
     .panel,
-    .record-card,
-    .backup {
-      background: rgba(255, 253, 249, 0.96);
-      border: 1px solid rgba(237, 222, 210, 0.82);
+    .record-card {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      margin: 0 0 18px;
+      padding: 18px;
+      border: 1px solid rgba(237, 222, 210, 0.86);
       border-radius: var(--radius);
+      background: rgba(255, 253, 249, 0.94);
       box-shadow: var(--shadow);
+      overflow: hidden;
     }
 
     .panel {
       display: none;
-      margin: 0 0 18px;
-      padding: 18px;
-      max-width: 100%;
-      min-width: 0;
-      overflow: hidden;
     }
 
-    .panel,
-    .form-card,
-    .record-card,
-    .card,
-    .backup,
-    .backup-area,
-    details,
-    .later-times,
-    .time-extra,
-    .field,
-    .form-section,
-    .form-grid,
-    .input-group,
-    .input-wrap,
-    .time-row,
-    summary,
-    .symptom-chip-area,
-    .symptom-area,
-    .backup-actions {
+    .panel.open {
+      display: block;
+    }
+
+    .form-card h2,
+    .inline-time-modal-card h2 {
+      margin: 0 0 14px;
+      font-size: 1.25rem;
+      line-height: 1.35;
+    }
+
+    .form-grid {
+      display: grid;
+      gap: 16px;
       width: 100%;
       max-width: 100%;
       min-width: 0;
-      box-sizing: border-box;
     }
 
-    .form-card,
-    .card {
-      overflow: hidden;
-    }
-
-    .app,
-    main,
-    section,
-    .record-list,
-    #todayRecords,
-    #pastRecords,
-    .record-top,
-    .record-title-row,
-    .detail-grid,
-    .detail,
-    .symptom-chip-row,
-    .symptom-buttons,
-    .past-filter-area,
-    .past-filter-buttons,
-    .form-actions,
-    .card-actions,
-    .backup-actions {
+    .field {
+      display: grid;
+      gap: 8px;
       width: 100%;
       max-width: 100%;
       min-width: 0;
-      box-sizing: border-box;
+    }
+
+    label,
+    .field-title {
+      color: var(--text);
+      font-weight: 700;
+      line-height: 1.45;
     }
 
     .input-wrap {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      box-sizing: border-box;
       overflow: hidden;
-      padding-right: 2px;
     }
 
     .input-wrap input {
@@ -284,97 +268,10 @@
       box-sizing: border-box;
     }
 
-    .date-input,
-    .time-input,
     .input-wrap input[type="date"],
     .input-wrap input[type="time"] {
-      width: calc(100% - 2px);
-      max-width: calc(100% - 2px);
       min-height: 58px;
       height: 58px;
-    }
-
-    .panel.open {
-      display: block;
-    }
-
-    .panel h2,
-    .section-title {
-      margin: 0 0 14px;
-      font-size: 1.25rem;
-      line-height: 1.4;
-      letter-spacing: 0;
-    }
-
-    .form-grid {
-      display: grid;
-      gap: 14px;
-      max-width: 100%;
-      min-width: 0;
-    }
-
-    .field {
-      max-width: 100%;
-      min-width: 0;
-      overflow-wrap: anywhere;
-    }
-
-    .field label,
-    .field-title {
-      display: block;
-      margin: 0 0 7px;
-      font-weight: 700;
-      color: #4d4439;
-    }
-
-    .category-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 10px;
-      width: 100%;
-      max-width: 100%;
-      min-width: 0;
-    }
-
-    .category-buttons {
-      width: 100%;
-      max-width: 100%;
-      min-width: 0;
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 10px;
-    }
-
-    .category-button {
-      width: 100%;
-      max-width: 100%;
-      min-width: 0;
-      border: 1px solid #ead9ca;
-      border-radius: 18px;
-      background: rgba(255, 253, 249, 0.92);
-      text-align: center;
-      font-weight: 800;
-      min-height: 50px;
-      box-shadow: none;
-    }
-
-    .category-btn {
-      width: 100%;
-      max-width: 100%;
-      min-width: 0;
-      box-sizing: border-box;
-    }
-
-    .category-button:hover {
-      background: #fff8f1;
-    }
-
-
-    .category-button.selected {
-      border-color: rgba(143, 191, 165, 0.85);
-      background: var(--accent-soft);
-      color: #355640;
-      box-shadow: inset 0 0 0 1px rgba(143, 191, 165, 0.25);
     }
 
     .time-row {
@@ -394,85 +291,88 @@
       box-sizing: border-box;
     }
 
-    .quick-button {
-      white-space: nowrap;
-      background: #eaf0e8;
-      color: #3c6049;
-      font-weight: 700;
-      min-width: 0;
-    }
-
-    .quick-button:hover {
-      background: #dde9df;
-    }
-
-    .later-times {
-      border: 1px solid rgba(234, 223, 206, 0.95);
-      border-radius: 15px;
-      background: rgba(255, 253, 249, 0.72);
-      padding: 0;
-      max-width: 100%;
-      min-width: 0;
-      overflow: hidden;
-    }
-
-    .later-times summary {
-      cursor: pointer;
-      min-height: 48px;
-      padding: 10px 13px;
-      color: var(--muted);
-      font-weight: 700;
-      list-style-position: inside;
-    }
-
-    .later-times summary:hover {
-      color: var(--text);
-    }
-
-    .later-times-body {
+    .category-grid,
+    .category-buttons {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 14px;
-      padding: 0 13px 13px;
-      max-width: 100%;
-      min-width: 0;
-    }
-
-    .later-times-body .symptom-chip-area {
-      grid-column: 1 / -1;
-    }
-
-    .symptom-chip-area {
-      display: grid;
-      gap: 7px;
+      gap: 10px;
       width: 100%;
       max-width: 100%;
       min-width: 0;
     }
 
-    .chip-title {
-      margin: 0;
-      color: var(--muted);
-      font-size: 0.93rem;
+    .category-button,
+    .category-btn {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      min-height: 48px;
+      padding: 10px 12px;
+      border: 1px solid #ead9ca;
+      border-radius: 16px;
+      background: rgba(255, 253, 249, 0.94);
+      color: var(--text);
       font-weight: 700;
+      text-align: center;
+    }
+
+    .category-button.selected,
+    .category-btn.selected {
+      border-color: rgba(143, 191, 165, 0.95);
+      background: var(--accent-soft);
+      color: #355640;
+      box-shadow: inset 0 0 0 1px rgba(143, 191, 165, 0.25);
+    }
+
+    .later-times,
+    .record-symptom-details {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      padding: 0;
+      border: 1px solid rgba(237, 222, 210, 0.78);
+      border-radius: 16px;
+      background: rgba(255, 253, 249, 0.66);
+      overflow: hidden;
+    }
+
+    .later-times summary,
+    .record-symptom-details summary {
+      cursor: pointer;
+      padding: 11px 13px;
+      color: var(--muted);
+      font-size: 0.94rem;
+      font-weight: 700;
+      line-height: 1.45;
+    }
+
+    .later-times-body {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+      padding: 0 13px 13px;
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+    }
+
+    .symptom-chip-area {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
     }
 
     .symptom-chips {
       display: grid;
       gap: 8px;
+      width: 100%;
       max-width: 100%;
       min-width: 0;
     }
 
-    .symptom-buttons {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      max-width: 100%;
-      min-width: 0;
-    }
-
-    .symptom-chip-row {
+    .symptom-chip-row,
+    .symptom-buttons,
+    .past-filter-buttons {
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
@@ -482,392 +382,176 @@
 
     .symptom-chip {
       max-width: 100%;
-      white-space: normal;
-      overflow-wrap: anywhere;
       min-height: 38px;
       padding: 8px 12px;
-      border: 1px solid #e3d8c6;
-      background: var(--tea);
-      color: #5f5346;
-      font-size: 0.93rem;
+      border: 1px solid #ead9ca;
+      border-radius: 999px;
+      background: #fffaf2;
+      color: var(--text);
+      font-size: 0.92rem;
       font-weight: 700;
+      white-space: nowrap;
     }
 
-    .symptom-chip:hover {
-      background: #f1dfcc;
+    .message {
+      margin: 0;
+      color: var(--warn);
+      font-weight: 700;
+      min-height: 1.4em;
     }
 
-    .form-actions {
+    .form-actions,
+    .card-actions,
+    .inline-time-modal-actions {
       display: flex;
-      flex-wrap: wrap;
       gap: 10px;
-      margin-top: -4px;
+      align-items: center;
+      max-width: 100%;
+      min-width: 0;
     }
 
-    .save-button {
-      min-width: 150px;
+    .save-button,
+    .inline-time-save-button {
       background: var(--accent);
       color: #fff;
       font-weight: 700;
     }
 
-    .save-button:hover {
-      background: var(--accent-dark);
-    }
-
-    .cancel-button {
-      background: #f1e6d7;
-    }
-
-    .message {
-      min-height: 0;
-      margin: 0;
-      color: var(--warn);
+    .cancel-button,
+    .inline-time-cancel-button {
+      background: #f3eadc;
+      color: var(--muted);
       font-weight: 700;
     }
 
     .records-section {
-      margin-top: 20px;
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      margin: 0 0 24px;
     }
 
-    .empty {
-      margin: 0;
-      padding: 18px;
-      color: var(--muted);
-      background: rgba(255, 253, 248, 0.62);
-      border: 1px dashed var(--line);
-      border-radius: var(--radius);
+    .section-title {
+      margin: 0 0 12px;
+      font-size: 1.28rem;
+      line-height: 1.4;
     }
 
     .record-list {
       display: grid;
       gap: 14px;
-      overflow-x: hidden;
-    }
-
-    .past-filter-area {
-      margin: 0 0 16px;
-      padding: 12px;
-      border: 1px solid rgba(237, 222, 210, 0.8);
-      border-radius: 18px;
-      background: rgba(255, 253, 249, 0.68);
+      width: 100%;
       max-width: 100%;
       min-width: 0;
-      box-sizing: border-box;
     }
 
-    .past-filter-label {
-      margin: 0 0 10px;
+    .empty {
+      margin: 0;
+      padding: 14px 16px;
+      border: 1px dashed rgba(237, 222, 210, 0.9);
+      border-radius: 16px;
+      background: rgba(255, 253, 249, 0.7);
       color: var(--muted);
-      font-size: 0.92rem;
-      font-weight: 700;
     }
-
-    .past-filter-buttons {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      max-width: 100%;
-      min-width: 0;
-    }
-
-    .past-filter-button {
-      min-height: 38px;
-      padding: 8px 12px;
-      border: 1px solid #ead9ca;
-      border-radius: 999px;
-      background: rgba(255, 253, 249, 0.96);
-      color: var(--text);
-      font-size: 0.92rem;
-      font-weight: 700;
-      white-space: normal;
-      max-width: 100%;
-      overflow-wrap: anywhere;
-    }
-
-    .past-filter-button.selected {
-      border-color: rgba(143, 191, 165, 0.85);
-      background: var(--accent-soft);
-      color: #355640;
-      box-shadow: inset 0 0 0 1px rgba(143, 191, 165, 0.25);
-    }
-
-    .date-group {
-      display: grid;
-      gap: 12px;
-      margin-bottom: 18px;
-    }
-
 
     .record-card {
-      padding: 17px;
+      display: grid;
+      gap: 12px;
+      margin-bottom: 0;
     }
 
-    .record-top {
-      margin-bottom: 12px;
+    .record-top,
+    .record-title-row {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
     }
 
     .record-title-row {
       display: flex;
-      align-items: center;
-      gap: 8px;
       flex-wrap: wrap;
-      width: 100%;
-      max-width: 100%;
-      min-width: 0;
-      overflow-wrap: anywhere;
+      gap: 8px;
+      align-items: center;
     }
 
     .date-text {
       margin: 0;
-      color: var(--text);
-      font-size: 1.08rem;
-      font-weight: 800;
-      line-height: 1.35;
-      letter-spacing: 0;
+      color: var(--muted);
+      font-size: 0.96rem;
+      font-weight: 700;
     }
 
     .category-name {
-      display: inline-flex;
-      min-width: 0;
-      overflow-wrap: anywhere;
-      align-items: center;
-      width: fit-content;
-      max-width: 100%;
       margin: 0;
-      padding: 5px 12px;
-      border: 1px solid rgba(143, 191, 165, 0.45);
+      padding: 5px 10px;
       border-radius: 999px;
-      background: linear-gradient(180deg, #eef8f1 0%, #f8fff9 100%);
-      color: #41644d;
-      font-size: 1.08rem;
-      font-weight: 800;
-      line-height: 1.35;
-      letter-spacing: 0;
-      box-shadow: 0 3px 10px rgba(143, 191, 165, 0.12);
-    }
-
-    .category-name::before {
-      content: "";
-      display: inline-block;
-      width: 9px;
-      height: 16px;
-      margin-right: 7px;
-      border-radius: 999px;
-      background: linear-gradient(180deg, #f4d9d6 0 50%, #8fbfa5 50% 100%);
-      box-shadow: 0 1px 3px rgba(122, 86, 61, 0.12);
-      flex: 0 0 auto;
+      background: var(--accent-soft);
+      color: #355640;
+      font-size: 0.92rem;
+      line-height: 1.4;
     }
 
     .medicine-memo {
-      margin: 0 0 12px;
+      margin: 0;
       color: var(--muted);
-      font-size: 0.95rem;
+      font-size: 0.92rem;
+      overflow-wrap: anywhere;
     }
 
     .detail-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 7px;
-      margin: 0 0 10px;
-      overflow: hidden;
+      gap: 8px;
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
     }
 
     .detail {
-      position: relative;
+      display: grid;
+      gap: 2px;
       min-width: 0;
-      min-height: 54px;
-      padding: 7px 9px;
-      border-radius: 12px;
-      background: #fbf6ed;
-      line-height: 1.32;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
+      padding: 8px 7px;
+      border-radius: 14px;
+      background: rgba(247, 234, 220, 0.62);
       overflow: hidden;
     }
 
     .detail-label {
-      display: block;
       color: var(--muted);
-      font-size: 0.78rem;
-      line-height: 1.25;
-      margin-bottom: 2px;
-      white-space: normal;
-      overflow-wrap: anywhere;
+      font-size: 0.74rem;
+      font-weight: 700;
+      line-height: 1.35;
+      white-space: nowrap;
     }
 
     .detail-value {
-      max-width: 100%;
       min-width: 0;
-      font-weight: 700;
-      font-size: 0.96rem;
-      line-height: 1.25;
+      color: var(--text);
+      font-size: 0.95rem;
+      font-weight: 800;
+      line-height: 1.35;
       overflow-wrap: anywhere;
-    }
-
-    .symptom-box {
-      margin: 0 0 11px;
-      padding: 10px 11px;
-      border-radius: 13px;
-      background: #fbf6ed;
-      white-space: pre-wrap;
-      overflow-wrap: anywhere;
-    }
-
-    .symptom-label {
-      display: block;
-      margin-bottom: 4px;
-      color: var(--muted);
-      font-size: 0.86rem;
-      font-weight: 700;
-    }
-
-    .card-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
     }
 
     .record-time-button {
       width: 100%;
       min-height: 34px;
-      padding: 5px 7px;
+      padding: 4px 2px;
       border-radius: 10px;
-      background: rgba(233, 242, 235, 0.9);
-      color: #355640;
-      font-size: 0.94rem;
-      font-weight: 800;
+      background: transparent;
+      color: #477257;
       text-align: left;
+      font-size: 0.92rem;
+      font-weight: 800;
     }
 
     .record-time-button:hover {
-      background: #dde9df;
-    }
-
-    body.modal-open {
-      overflow: hidden;
-    }
-
-    .inline-time-modal[hidden] {
-      display: none;
-    }
-
-    .inline-time-modal {
-      position: fixed;
-      inset: 0;
-      z-index: 1000;
-      display: grid;
-      place-items: center;
-      padding: 16px;
-      max-width: 100%;
-      overflow-x: hidden;
-    }
-
-    .inline-time-modal-backdrop {
-      position: absolute;
-      inset: 0;
-      background: rgba(62, 53, 43, 0.36);
-    }
-
-    .inline-time-modal-card {
-      position: relative;
-      width: min(420px, calc(100% - 32px));
-      max-width: 100%;
-      min-width: 0;
-      padding: 18px;
-      border: 1px solid rgba(237, 222, 210, 0.88);
-      border-radius: 20px;
-      background: rgba(255, 253, 249, 0.98);
-      box-shadow: 0 16px 42px rgba(82, 63, 38, 0.18);
-    }
-
-    .inline-time-modal-card h2 {
-      margin: 0 0 8px;
-      font-size: 1.2rem;
-      line-height: 1.4;
-      letter-spacing: 0;
-    }
-
-    .inline-time-modal-description {
-      margin: 0 0 14px;
-      color: var(--muted);
-      font-size: 0.94rem;
-      line-height: 1.6;
-    }
-
-    .inline-time-select-row {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
-      gap: 8px;
-      align-items: center;
-      margin: 0 0 16px;
-      max-width: 100%;
-      min-width: 0;
-    }
-
-    .inline-time-separator {
-      color: var(--muted);
-      font-size: 1.3rem;
-      font-weight: 800;
-    }
-
-    .inline-time-select-row select {
-      min-height: 56px;
-      border-radius: 16px;
-      background: #fffefa;
-      font-size: 1.08rem;
-      font-weight: 800;
-      text-align: center;
-      text-align-last: center;
-    }
-
-    .inline-time-modal-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      max-width: 100%;
-    }
-
-    .inline-time-save-button {
-      flex: 1 1 140px;
-      background: var(--accent);
-      color: #fff;
-      font-weight: 800;
-    }
-
-    .inline-time-save-button:hover {
-      background: var(--accent-dark);
-    }
-
-    .inline-time-cancel-button {
-      flex: 1 1 120px;
-      background: #f1e6d7;
-      color: var(--text);
-      font-weight: 700;
-    }
-
-    .record-symptom-details {
-      margin: 0 0 11px;
-      border: 1px solid rgba(234, 223, 206, 0.9);
-      border-radius: 14px;
-      background: rgba(255, 253, 249, 0.72);
-      box-shadow: none;
-      overflow: hidden;
-    }
-
-    .record-symptom-details summary {
-      cursor: pointer;
-      min-height: 42px;
-      padding: 9px 12px;
-      color: var(--muted);
-      font-size: 0.92rem;
-      font-weight: 700;
-      list-style-position: inside;
+      background: rgba(143, 191, 165, 0.12);
     }
 
     .record-symptom-area {
-      padding: 0 12px 12px;
+      padding: 0 13px 13px;
     }
 
     .record-symptom-description {
@@ -876,6 +560,37 @@
       font-size: 0.86rem;
       font-weight: 700;
       line-height: 1.5;
+    }
+
+    .symptom-box {
+      padding: 10px 12px;
+      border-radius: 14px;
+      background: rgba(255, 248, 240, 0.95);
+      color: var(--text);
+      font-size: 0.94rem;
+      line-height: 1.65;
+      overflow-wrap: anywhere;
+    }
+
+    .symptom-label {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--muted);
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+
+    .card-actions {
+      justify-content: flex-start;
+      flex-wrap: wrap;
+    }
+
+    .edit-button,
+    .delete-button {
+      min-width: 84px;
+      min-height: 40px;
+      padding: 8px 14px;
+      font-size: 0.92rem;
     }
 
     .edit-button {
@@ -894,32 +609,62 @@
       background: #ffe3df;
     }
 
-    .backup {
-      margin: 0 0 20px;
-      padding: 14px;
-      box-shadow: none;
-      background: rgba(255, 253, 249, 0.72);
-      overflow: hidden;
+    .past-filter-area {
+      margin: 0 0 14px;
+      padding: 12px;
+      border: 1px solid rgba(237, 222, 210, 0.8);
+      border-radius: 18px;
+      background: rgba(255, 253, 249, 0.68);
+      max-width: 100%;
+      min-width: 0;
     }
 
-    .backup summary {
-      cursor: pointer;
+    .past-filter-label {
+      margin: 0 0 10px;
       color: var(--muted);
+      font-size: 0.92rem;
       font-weight: 700;
-      font-size: 0.94rem;
     }
 
-    .backup-body {
+    .past-filter-button {
+      min-height: 38px;
+      padding: 8px 12px;
+      border: 1px solid #ead9ca;
+      border-radius: 999px;
+      background: rgba(255, 253, 249, 0.96);
+      color: var(--text);
+      font-size: 0.92rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .past-filter-button.selected {
+      border-color: rgba(143, 191, 165, 0.85);
+      background: var(--accent-soft);
+      color: #355640;
+      box-shadow: inset 0 0 0 1px rgba(143, 191, 165, 0.25);
+    }
+
+    .backup-card {
       display: grid;
       gap: 10px;
-      margin-top: 12px;
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      margin: 16px 0 18px;
+      padding: 14px 16px;
+      border: 1px solid rgba(237, 222, 210, 0.78);
+      border-radius: 18px;
+      background: rgba(255, 253, 249, 0.82);
+      box-shadow: 0 8px 20px rgba(90, 72, 56, 0.045);
+      overflow: hidden;
     }
 
     .backup-description {
       margin: 0;
       color: var(--muted);
       font-size: 0.9rem;
-      line-height: 1.6;
+      line-height: 1.65;
     }
 
     .backup-actions {
@@ -933,11 +678,12 @@
 
     .small-button {
       min-height: 38px;
-      padding: 8px 12px;
+      padding: 8px 14px;
       border-radius: 999px;
       font-size: 0.9rem;
       background: #f3eadc;
       color: var(--muted);
+      font-weight: 700;
     }
 
     .file-input {
@@ -963,8 +709,69 @@
     .backup-message {
       margin: 0;
       color: var(--muted);
-      font-size: 0.9rem;
-      min-height: 1.4em;
+      font-size: 0.88rem;
+      min-height: 1.35em;
+    }
+
+    .inline-time-modal[hidden] {
+      display: none;
+    }
+
+    .inline-time-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      display: grid;
+      place-items: center;
+      width: 100%;
+      max-width: 100%;
+      padding: 16px;
+    }
+
+    .inline-time-modal-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(55, 43, 36, 0.36);
+    }
+
+    .inline-time-modal-card {
+      position: relative;
+      z-index: 1;
+      width: min(420px, calc(100vw - 32px));
+      max-width: 100%;
+      padding: 20px;
+      border-radius: 22px;
+      background: var(--card);
+      box-shadow: 0 18px 50px rgba(70, 51, 37, 0.2);
+    }
+
+    .inline-time-modal-description {
+      margin: 0 0 14px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .inline-time-select-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+      gap: 10px;
+      align-items: center;
+      margin: 12px 0 18px;
+      max-width: 100%;
+      min-width: 0;
+    }
+
+    .inline-time-select-row select {
+      min-height: 54px;
+      font-size: 1.05rem;
+      font-weight: 800;
+      text-align: center;
+    }
+
+    .inline-time-separator {
+      color: var(--muted);
+      font-weight: 800;
+      font-size: 1.2rem;
     }
 
     .error {
@@ -1142,18 +949,15 @@
       </form>
     </section>
 
-    <details class="backup">
-      <summary>記録の保存・復元</summary>
-      <div class="backup-body">
-        <p class="backup-description">記録を保存したり復元できます。<br>大切な記録がなくならないように、定期的に保存をお願いします。</p>
-        <div class="backup-actions">
-          <button class="small-button" id="exportButton" type="button">保存</button>
-          <label class="small-button restore-button" for="importInput">復元</label>
-          <input class="file-input" id="importInput" type="file" accept="application/json,.json">
-        </div>
-        <p class="backup-message" id="backupMessage"></p>
+    <section class="backup-card" aria-label="記録の保存と復元">
+      <p class="backup-description">記録を保存したり復元できます。<br>大切な記録がなくならないように、定期的に保存をお願いします。</p>
+      <div class="backup-actions">
+        <button class="small-button" id="exportButton" type="button">保存</button>
+        <label class="small-button restore-button" for="importInput">復元</label>
+        <input class="file-input" id="importInput" type="file" accept="application/json,.json">
       </div>
-    </details>
+      <p class="backup-message" id="backupMessage" aria-live="polite"></p>
+    </section>
 
     <section class="records-section" aria-labelledby="todayTitle">
       <h2 class="section-title" id="todayTitle">今日の記録</h2>
