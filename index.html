@@ -491,6 +491,16 @@
       line-height: 1.4;
     }
 
+    #medicineAmountInput {
+      min-height: 52px;
+    }
+
+    .medicine-info {
+      display: grid;
+      gap: 3px;
+      min-width: 0;
+    }
+
     .medicine-memo {
       margin: 0;
       color: var(--muted);
@@ -909,8 +919,26 @@
           </div>
 
           <div class="field">
-            <label for="medicineMemoInput">薬名・量などの記入（任意）</label>
-            <input type="text" id="medicineMemoInput">
+            <label for="medicineNameInput">薬名の記入（任意）</label>
+            <input type="text" id="medicineNameInput">
+          </div>
+
+          <div class="field">
+            <label for="medicineAmountInput">量（任意）</label>
+            <select id="medicineAmountInput">
+              <option value="">なし</option>
+              <option value="0.5">0.5錠</option>
+              <option value="1">1錠</option>
+              <option value="1.5">1.5錠</option>
+              <option value="2">2錠</option>
+              <option value="2.5">2.5錠</option>
+              <option value="3">3錠</option>
+              <option value="3.5">3.5錠</option>
+              <option value="4">4錠</option>
+              <option value="4.5">4.5錠</option>
+              <option value="5">5錠</option>
+              <option value="5以上">5錠以上</option>
+            </select>
           </div>
 
           <div class="field">
@@ -1024,7 +1052,8 @@
     const dateInput = document.getElementById("dateInput");
     const categoryButtons = document.getElementById("categoryButtons");
     const categoryInput = document.getElementById("categoryInput");
-    const medicineMemoInput = document.getElementById("medicineMemoInput");
+    const medicineNameInput = document.getElementById("medicineNameInput");
+    const medicineAmountInput = document.getElementById("medicineAmountInput");
     const takenTimeInput = document.getElementById("takenTimeInput");
     const workedTimeInput = document.getElementById("workedTimeInput");
     const woreOffTimeInput = document.getElementById("woreOffTimeInput");
@@ -1050,6 +1079,7 @@
     let records = loadRecords();
     let selectedPastCategory = PAST_FILTER_ALL;
     let inlineTimeModalState = null;
+    let openRecordSymptomDetails = new Set();
 
     function todayString() {
       const now = new Date();
@@ -1106,7 +1136,9 @@
         typeof record.id === "string" &&
         typeof record.date === "string" &&
         CATEGORIES.includes(record.category) &&
-        typeof record.medicineMemo === "string" &&
+        (typeof record.medicineMemo === "string" || record.medicineMemo == null) &&
+        (typeof record.medicineName === "string" || record.medicineName == null) &&
+        (typeof record.medicineAmount === "string" || record.medicineAmount == null) &&
         typeof record.takenTime === "string" &&
         (typeof record.workedTime === "string" || record.workedTime == null) &&
         (typeof record.woreOffTime === "string" || record.woreOffTime == null) &&
@@ -1147,6 +1179,46 @@
       return parts.join("、");
     }
 
+
+    function normalizeAmountValue(value) {
+      const allowedValues = ["", "0.5", "1", "1.5", "2", "2.5", "3", "3.5", "4", "4.5", "5", "5以上"];
+      return allowedValues.includes(value) ? value : "";
+    }
+
+    function formatAmount(value) {
+      const normalized = normalizeAmountValue(value || "");
+      if (!normalized) {
+        return "";
+      }
+      if (normalized === "5以上") {
+        return "5錠以上";
+      }
+      return `${normalized}錠`;
+    }
+
+    function hasNewMedicineInfo(record) {
+      return Boolean((record.medicineName || "").trim() || normalizeAmountValue(record.medicineAmount || ""));
+    }
+
+    function renderMedicineInfo(record) {
+      const medicineName = (record.medicineName || "").trim();
+      const medicineAmount = formatAmount(record.medicineAmount || "");
+
+      if (medicineName || medicineAmount) {
+        const nameHtml = medicineName
+          ? `<p class="medicine-memo">薬名：${escapeHtml(medicineName)}</p>`
+          : "";
+        const amountHtml = medicineAmount
+          ? `<p class="medicine-memo">量：${escapeHtml(medicineAmount)}</p>`
+          : "";
+        return `<div class="medicine-info">${nameHtml}${amountHtml}</div>`;
+      }
+
+      const legacyMemo = (record.medicineMemo || "").trim();
+      return legacyMemo
+        ? `<p class="medicine-memo">薬名・量など：${escapeHtml(legacyMemo)}</p>`
+        : "";
+    }
     function normalizeStoredRecord(record) {
       if (!isValidRecordLike(record)) {
         return null;
@@ -1159,6 +1231,8 @@
         date: record.date,
         category: record.category,
         medicineMemo: record.medicineMemo || "",
+        medicineName: record.medicineName || "",
+        medicineAmount: normalizeAmountValue(record.medicineAmount || ""),
         takenTime: record.takenTime || "",
         workedTime: record.workedTime || "",
         woreOffTime: record.woreOffTime || "",
@@ -1179,6 +1253,8 @@
           date: typeof record.date === "string" ? record.date : "",
           category: typeof record.category === "string" ? record.category : "",
           medicineMemo: typeof record.medicineMemo === "string" ? record.medicineMemo : "",
+          medicineName: typeof record.medicineName === "string" ? record.medicineName : "",
+          medicineAmount: normalizeAmountValue(typeof record.medicineAmount === "string" ? record.medicineAmount : ""),
           takenTime: typeof record.takenTime === "string" ? record.takenTime : "",
           workedTime: typeof record.workedTime === "string" ? record.workedTime : "",
           woreOffTime: typeof record.woreOffTime === "string" ? record.woreOffTime : "",
@@ -1258,7 +1334,8 @@
       formTitle.textContent = "服薬を記録する";
       dateInput.value = APP_OPEN_DATE;
       categoryInput.value = "";
-      medicineMemoInput.value = "";
+      medicineNameInput.value = "";
+      medicineAmountInput.value = "";
       takenTimeInput.value = "";
       workedTimeInput.value = "";
       woreOffTimeInput.value = "";
@@ -1276,7 +1353,8 @@
         formTitle.textContent = "記録を編集する";
         dateInput.value = record.date;
         categoryInput.value = record.category;
-        medicineMemoInput.value = record.medicineMemo;
+        medicineNameInput.value = record.medicineName || record.medicineMemo || "";
+        medicineAmountInput.value = normalizeAmountValue(record.medicineAmount || "");
         takenTimeInput.value = record.takenTime;
         workedTimeInput.value = record.workedTime;
         woreOffTimeInput.value = record.woreOffTime;
@@ -1334,9 +1412,7 @@
     }
 
     function renderRecordCard(record) {
-      const memoHtml = record.medicineMemo.trim()
-        ? `<p class="medicine-memo">薬名・量など：${escapeHtml(record.medicineMemo.trim())}</p>`
-        : "";
+      const memoHtml = renderMedicineInfo(record);
       const symptomHtml = record.symptom.trim()
         ? `<div class="symptom-box"><span class="symptom-label">メモ</span>${escapeHtml(record.symptom.trim())}</div>`
         : "";
@@ -1347,7 +1423,7 @@
         ? `<span class="detail-value">${escapeHtml(displayTime(record.woreOffTime))}</span>`
         : `<button class="detail-value record-time-button" type="button" data-action="open-inline-time-modal" data-id="${escapeHtml(record.id)}" data-field="woreOffTime">記録する</button>`;
       const recordSymptomHtml = `
-        <details class="record-symptom-details">
+        <details class="record-symptom-details" data-record-id="${escapeHtml(record.id)}" ${openRecordSymptomDetails.has(record.id) ? "open" : ""}>
           <summary>服用後の症状を選ぶ</summary>
           <div class="symptom-chip-area record-symptom-area" aria-label="服用後の症状">
             <p class="record-symptom-description">ボタンを押すと自動的にメモへ追加されます</p>
@@ -1432,7 +1508,9 @@
         id: currentId || createId(),
         date: dateInput.value || todayString(),
         category: categoryInput.value,
-        medicineMemo: medicineMemoInput.value.trim(),
+        medicineMemo: existingRecord && !hasNewMedicineInfo(existingRecord) ? medicineNameInput.value.trim() : (existingRecord ? existingRecord.medicineMemo || "" : ""),
+        medicineName: medicineNameInput.value.trim(),
+        medicineAmount: normalizeAmountValue(medicineAmountInput.value),
         takenTime: takenTimeInput.value,
         workedTime: workedTimeInput.value,
         woreOffTime: woreOffTimeInput.value,
@@ -1536,6 +1614,7 @@
 
       if (action === "add-symptom") {
         const symptom = button.dataset.symptom || "";
+        openRecordSymptomDetails.add(id);
         records = records.map((item) => item.id === id
           ? { ...item, symptom: mergeSymptomText(item.symptom || "", symptom), updatedAt: new Date().toISOString() }
           : item
@@ -1550,11 +1629,28 @@
           return;
         }
         records = records.filter((item) => item.id !== id);
+        openRecordSymptomDetails.delete(id);
         saveRecords();
         renderRecords();
       }
     }
 
+
+    function handleRecordSymptomToggle(event) {
+      const details = event.target.closest ? event.target.closest(".record-symptom-details") : null;
+      if (!details || event.target !== details) {
+        return;
+      }
+      const recordId = details.dataset.recordId;
+      if (!recordId) {
+        return;
+      }
+      if (details.open) {
+        openRecordSymptomDetails.add(recordId);
+      } else {
+        openRecordSymptomDetails.delete(recordId);
+      }
+    }
     function exportJson() {
       const data = JSON.stringify(records, null, 2);
       const blob = new Blob([data], { type: "application/json" });
@@ -1648,6 +1744,8 @@
     recordForm.addEventListener("submit", handleSubmit);
     todayRecords.addEventListener("click", handleRecordAction);
     pastRecords.addEventListener("click", handleRecordAction);
+    todayRecords.addEventListener("toggle", handleRecordSymptomToggle, true);
+    pastRecords.addEventListener("toggle", handleRecordSymptomToggle, true);
     inlineTimeSaveButton.addEventListener("click", saveInlineTimeFromModal);
     inlineTimeCancelButton.addEventListener("click", closeInlineTimeModal);
     inlineTimeModalBackdrop.addEventListener("click", closeInlineTimeModal);
