@@ -1493,9 +1493,9 @@
         : `<button class="detail-value record-time-button" type="button" data-action="open-inline-time-modal" data-id="${escapeHtml(record.id)}" data-field="woreOffTime">記録する</button>`;
       const recordSymptomHtml = `
         <details class="record-symptom-details" data-record-id="${escapeHtml(record.id)}" ${openRecordSymptomDetails.has(record.id) ? "open" : ""}>
-          <summary>服用後の症状を選ぶ</summary>
+          <summary>服用後の症状を追加</summary>
           <div class="symptom-chip-area record-symptom-area" aria-label="服用後の症状">
-            <p class="record-symptom-description">ボタンを押すと自動的にメモへ追加されます</p>
+            <p class="record-symptom-description">ボタンを押すと自動的に服用後メモへ追加されます</p>
             <div class="symptom-chips">${renderRecordSymptomChips(record.id)}</div>
           </div>
         </details>
@@ -1524,8 +1524,8 @@
               ${woreOffValueHtml}
             </div>
           </div>
-          ${recordSymptomHtml}
           ${symptomHtml}
+          ${recordSymptomHtml}
           <div class="card-actions">
             <button class="edit-button" type="button" data-action="edit" data-id="${escapeHtml(record.id)}">編集</button>
             <button class="delete-button" type="button" data-action="delete" data-id="${escapeHtml(record.id)}">削除</button>
