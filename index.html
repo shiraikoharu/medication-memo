@@ -1019,18 +1019,13 @@
       <p class="backup-message" id="backupMessage" aria-live="polite"></p>
     </section>
 
-    <section class="records-section" aria-labelledby="todayTitle">
-      <h2 class="section-title" id="todayTitle">今日の記録</h2>
-      <div class="record-list" id="todayRecords"></div>
-    </section>
-
-    <section class="records-section" aria-labelledby="pastTitle">
-      <h2 class="section-title" id="pastTitle">過去の記録</h2>
-      <div class="past-filter-area" aria-label="過去の記録を薬の種類で絞り込む">
+    <section class="records-section" aria-labelledby="recordsTitle">
+      <h2 class="section-title" id="recordsTitle">記録</h2>
+      <div class="past-filter-area" aria-label="記録を薬の種類で絞り込む">
         <p class="past-filter-label">薬の種類で見る</p>
         <div class="past-filter-buttons" id="pastFilterButtons"></div>
       </div>
-      <div id="pastRecords"></div>
+      <div id="recordsList"></div>
     </section>
 
 
@@ -1089,9 +1084,8 @@
     const afterSymptomChips = document.getElementById("afterSymptomChips");
     const formMessage = document.getElementById("formMessage");
     const cancelButton = document.getElementById("cancelButton");
-    const todayRecords = document.getElementById("todayRecords");
+    const recordsList = document.getElementById("recordsList");
     const pastFilterButtons = document.getElementById("pastFilterButtons");
-    const pastRecords = document.getElementById("pastRecords");
     const exportButton = document.getElementById("exportButton");
     const importInput = document.getElementById("importInput");
     const backupMessage = document.getElementById("backupMessage");
@@ -1535,30 +1529,24 @@
     }
 
     function renderRecords() {
-      const today = todayString();
-      const todayList = sortedRecords(records.filter((record) => record.date === today));
-      const allPastList = sortedRecords(records.filter((record) => record.date !== today));
-      const filteredPastList = selectedPastCategory === PAST_FILTER_ALL
-        ? allPastList
-        : allPastList.filter((record) => record.category === selectedPastCategory);
-
-      todayRecords.innerHTML = todayList.length
-        ? todayList.map(renderRecordCard).join("")
-        : `<p class="empty">今日の記録はまだありません。</p>`;
+      const sortedList = sortedRecords(records);
+      const filteredList = selectedPastCategory === PAST_FILTER_ALL
+        ? sortedList
+        : sortedList.filter((record) => record.category === selectedPastCategory);
 
       renderPastFilterButtons();
 
-      if (!allPastList.length) {
-        pastRecords.innerHTML = `<p class="empty">過去の記録はまだありません。</p>`;
+      if (!sortedList.length) {
+        recordsList.innerHTML = `<p class="empty">まだ記録はありません。</p>`;
         return;
       }
 
-      if (!filteredPastList.length) {
-        pastRecords.innerHTML = `<p class="empty">この薬の過去の記録はまだありません。</p>`;
+      if (!filteredList.length) {
+        recordsList.innerHTML = `<p class="empty">この薬の種類の記録はまだありません。</p>`;
         return;
       }
 
-      pastRecords.innerHTML = `<div class="record-list">${filteredPastList.map(renderRecordCard).join("")}</div>`;
+      recordsList.innerHTML = `<div class="record-list">${filteredList.map(renderRecordCard).join("")}</div>`;
     }
 
     function handleSubmit(event) {
@@ -1826,10 +1814,8 @@
     openFormButton.addEventListener("click", () => openForm("new"));
     cancelButton.addEventListener("click", closeForm);
     recordForm.addEventListener("submit", handleSubmit);
-    todayRecords.addEventListener("click", handleRecordAction);
-    pastRecords.addEventListener("click", handleRecordAction);
-    todayRecords.addEventListener("toggle", handleRecordSymptomToggle, true);
-    pastRecords.addEventListener("toggle", handleRecordSymptomToggle, true);
+    recordsList.addEventListener("click", handleRecordAction);
+    recordsList.addEventListener("toggle", handleRecordSymptomToggle, true);
     inlineTimeSaveButton.addEventListener("click", saveInlineTimeFromModal);
     inlineTimeCancelButton.addEventListener("click", closeInlineTimeModal);
     inlineTimeModalBackdrop.addEventListener("click", closeInlineTimeModal);
